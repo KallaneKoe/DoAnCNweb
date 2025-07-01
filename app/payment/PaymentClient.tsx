@@ -85,8 +85,30 @@ const PaymentClient: React.FC<PaymentClientProps> = ({
       setIsLoading(true);
 
       try {
+        const characterInfo = {
+          guest: {
+            firstName: data.firstName,
+            lastName: data.lastName,
+            email: data.email,
+            phone: data.phone,
+            guestCount: data.guestCount,
+            arrivalTime: data.arrivalTime,
+            specialRequests: data.specialRequests,
+          },
+          billing: {
+            firstName: data.billingFirstName,
+            lastName: data.billingLastName,
+            address: data.billingAddress,
+            city: data.billingCity,
+            state: data.billingState,
+            zip: data.billingZip,
+            country: data.billingCountry,
+          },
+        };
+
         const reservationResponse = await axios.post("/api/reservations", {
           listingId: listing.id,
+          hostId: listing.userId,
           startDate: reservationData.startDate,
           endDate: reservationData.endDate,
           totalPrice: reservationData.totalPrice,
@@ -114,6 +136,7 @@ const PaymentClient: React.FC<PaymentClientProps> = ({
           },
           specialRequests: data.specialRequests,
           arrivalTime: data.arrivalTime,
+          characterInfo, // Pass characterInfo to the API
         });
 
         toast.success("Booking confirmed successfully!");
@@ -140,6 +163,7 @@ const PaymentClient: React.FC<PaymentClientProps> = ({
     [
       listing.id,
       listing.user.id,
+      listing.userId, // Add this dependency
       listing.user.name,
       listing.title,
       reservationData,

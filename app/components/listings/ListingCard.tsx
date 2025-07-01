@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 import { format } from "date-fns";
@@ -90,9 +91,10 @@ const ListingCard: React.FC<ListingCardProps> = ({
   }, [reservation]);
 
   return (
-    <div
-      onClick={() => !small && router.push(`/listings/${data.id}`)}
+    <Link
+      href={`/listings/${data.id}`}
       className={`col-span-1 cursor-pointer group ${small ? "opacity-90" : ""}`}
+      prefetch={!small}
     >
       <div className="flex flex-col gap-2 w-full">
         <div
@@ -155,7 +157,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
           )}
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

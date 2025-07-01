@@ -68,13 +68,15 @@ model Listing {
 }
 
 model Reservation {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId     String   @db.ObjectId
-  listingId  String   @db.ObjectId
-  startDate  DateTime
-  endDate    DateTime
-  totalPrice Int
-  createdAt  DateTime @default(now())
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String   @db.ObjectId
+  listingId     String   @db.ObjectId
+  hostId        String?  @db.ObjectId
+  startDate     DateTime
+  endDate       DateTime
+  totalPrice    Int
+  createdAt     DateTime @default(now())
+  characterInfo Json?
 
   user         User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   listing      Listing        @relation(fields: [listingId], references: [id], onDelete: Cascade)
